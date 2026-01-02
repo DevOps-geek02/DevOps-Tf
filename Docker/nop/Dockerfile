@@ -11,17 +11,14 @@ ARG group=nopcommerce
 ARG uid=1000
 ARG gid=1000
 ARG HOME_DIR=/nop
-# Create user nopcommerce
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "$HOME_DIR" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-# Copy app files from the extractor stage, ensure App_Data exists and is writable
 COPY --from=extractor /nopCommerce ${HOME_DIR}
 RUN mkdir -p ${HOME_DIR}/App_Data \
     && chown -R ${user}:${group} ${HOME_DIR} \
     && chmod -R u+rwX ${HOME_DIR}/App_Data
 
-# Run as non-root user
 USER ${user}
 WORKDIR ${HOME_DIR}
 EXPOSE 5000
