@@ -1,0 +1,31 @@
+---
+version: "3.9"
+services:
+  nop-srv:
+    build: 
+      context: .
+    networks:
+      - nop-net
+    ports:
+      - target: 5000
+        published: 5000
+    depends_on:
+      - nop-db
+  nop-db:
+    image: mysql:8.0
+    networks:
+      - nop-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=aditya
+      - MYSQL_PASSWORD=aditya
+    volumes:
+      - type: volume
+        source: nop-db
+        target: /var/lib/mysql
+volumes:
+  nop-db:
+
+networks:
+  nop-net:
