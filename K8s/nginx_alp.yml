@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ex2-pod
+spec:
+  containers:
+    - name: ex2-nginix
+      image: nginx
+      ports:
+        - containerPort:80
